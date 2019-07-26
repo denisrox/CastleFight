@@ -9,6 +9,7 @@ public class move : MonoBehaviour
     public NavMeshAgent player;
     public GameObject target;
 
+
     void Start()
     {
         
