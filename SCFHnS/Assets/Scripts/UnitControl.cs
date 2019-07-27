@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class UnitControl : MonoBehaviour
 {
     private Vector3 targetPosition;
-    public float duration; //to calculate movement speed for unit
+    public NavMeshAgent NavMesh;
     private bool isRunning; //unit is running or staying?
     private Animator anim;
 
@@ -30,16 +30,13 @@ public class UnitControl : MonoBehaviour
             ray = Camera.main.ScreenPointToRay(Input.mousePosition); 
             if (Physics.Raycast(ray, out hit))
             {
+                NavMesh.SetDestination(hit.point);
                 isRunning = true;
-                targetPosition = hit.point; 
-               
             }
         }
 
         if (isRunning && !Mathf.Approximately(transform.position.magnitude, targetPosition.magnitude))
         {
-            transform.LookAt(targetPosition);
-            transform.position = Vector3.Lerp(transform.position, targetPosition, 1 / (duration * Vector3.Distance(transform.position, targetPosition))); //Plavnoe peremeshenie
             CheckAnimation();
         }
         else if (isRunning && Mathf.Approximately(transform.position.magnitude, targetPosition.magnitude))
